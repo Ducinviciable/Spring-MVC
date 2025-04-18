@@ -1,0 +1,11 @@
+package org.example.spring_mvc_demo.controller;
+
+import org.springframework.stereotype.Controller;
+
+@Controller
+public class Hello {
+
+    public String index() {
+        return "index.html";
+    }
+}

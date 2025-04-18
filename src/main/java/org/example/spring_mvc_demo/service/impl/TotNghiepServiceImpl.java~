@@ -1,0 +1,10 @@
+package org.example.spring_mvc_demo.service.impl;
+
+import org.example.spring_mvc_demo.repository.TNRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+@Service
+public class TotNghiepServiceImpl {
+    @Autowired private TNRepository tnRepository;
+}
