@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Thông tin sinh viên</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7fa;
+            margin: 0;
+            padding: 20px;
+        }
+        .form-container {
+            max-width: 500px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        .form-container h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            color: #444;
+            margin-bottom: 5px;
+            font-size: 0.95em;
+        }
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1em;
+            box-sizing: border-box;
+            transition: border-color 0.3s;
+        }
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #007bff;
+        }
+
+        .form-group .error {
+            color: #e3342f;
+            font-size: 0.85em;
+            margin-top: 5px;
+            display: block;
+        }
+        .form-group .required::after {
+            content: '*';
+            color: #e3342f;
+            margin-left: 3px;
+        }
+        .submit-btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .submit-btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+<div class="form-container">
+    <h2>Nhập thông tin sinh viên tốt nghiệp</h2>
+
+    <form th:action="@{/add}" method="post">
+        <!-- Thông tin sinh viên -->
+        <div class="form-group">
+            <label for="soCMND" class="required">CMND:</label>
+            <input type="text" id="soCMND" th:name="sinhVien.soCMND" th:value="${sinhVien.soCMND}" required/>
+            <span th:if="${#fields.hasErrors('sinhVien.soCMND')}" th:errors="${sinhVien.soCMND}" class="error"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="hoTen">Họ tên:</label>
+            <input type="text" id="hoTen" th:name="sinhVien.hoTen" th:value="${sinhVien.hoTen}"/>
+        </div>
+
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" id="email" th:name="sinhVien.email" th:value="${sinhVien.email}"/>
+        </div>
+
+        <div class="form-group">
+            <label for="soDT">SĐT:</label>
+            <input type="text" id="soDT" th:name="sinhVien.soDT" th:value="${sinhVien.soDT}"/>
+        </div>
+
+        <div class="form-group">
+            <label for="diaChi">Địa chỉ:</label>
+            <input type="text" id="diaChi" th:name="sinhVien.diaChi" th:value="${sinhVien.diaChi}"/>
+        </div>
+
+        <!-- Thông tin tốt nghiệp -->
+        <div class="form-group">
+            <label for="maTruong" class="required">Trường:</label>
+            <select id="maTruong" th:name="totNghiep.truong.maTruong" required>
+                <option value="">-- Chọn Trường --</option>
+                <option th:each="t : ${truongs}" th:value="${t.maTruong}" th:text="${t.tenTruong}" th:selected="${totNghiep.truong.maTruong == t.maTruong}"></option>
+            </select>
+            <span th:if="${#fields.hasErrors('totNghiep.truong.maTruong')}" th:errors="${totNghiep.truong.maTruong}" class="error"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="maNganh" class="required">Ngành:</label>
+            <select id="maNganh" th:name="totNghiep.nganh.maNganh" required>
+                <option value="">-- Chọn Ngành --</option>
+                <option th:each="n : ${nganhs}" th:value="${n.maNganh}" th:text="${n.tenNganh}" th:selected="${totNghiep.nganh.maNganh == n.maNganh}"></option>
+            </select>
+            <span th:if="${#fields.hasErrors('totNghiep.nganh.maNganh')}" th:errors="${totNghiep.nganh.maNganh}" class="error"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="heTN">Hệ tốt nghiệp:</label>
+            <input type="text" id="heTN" th:name="totNghiep.heTN" th:value="${totNghiep.heTN}"/>
+        </div>
+
+        <div class="form-group">
+            <label for="namTN" class="required">Năm tốt nghiệp:</label>
+            <input type="date" id="namTN" th:name="totNghiep.namTN" th:value="${totNghiep.namTN}" required/>
+            <span th:if="${#fields.hasErrors('totNghiep.namTN')}" th:errors="${totNghiep.namTN}" class="error"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="loaiTN">Loại tốt nghiệp:</label>
+            <input type="text" id="loaiTN" th:name="totNghiep.loaiTN" th:value="${totNghiep.loaiTN}"/>
+        </div>
+
+        <button type="submit" class="submit-btn">Lưu</button>
+    </form>
+</div>
+</body>
+</html>
